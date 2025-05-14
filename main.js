@@ -1,3 +1,4 @@
+console.log('Telegram.WebApp available:', !!window.Telegram?.WebApp);
 document.getElementById('ticketForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
