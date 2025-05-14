@@ -3,7 +3,7 @@ console.log("UserAgent:", navigator.userAgent);
 console.log("Telegram object:", window.Telegram);
 console.log("WebApp object:", window.Telegram?.WebApp);
 
-// Ждём полной загрузки
+// Ждём полной загрузк
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('ticketForm');
     
