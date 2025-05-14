@@ -48,6 +48,7 @@ function handleSubmit(e) {
     } else {
         alert(`Данные (WebApp недоступен):\n${data.title}\n${data.description}`);
     }
+}
 
 
 
