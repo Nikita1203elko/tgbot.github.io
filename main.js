@@ -1,40 +1,48 @@
-// Отладочная информация
-console.log("UserAgent:", navigator.userAgent);
-console.log("Telegram object:", window.Telegram);
-console.log("WebApp object:", window.Telegram?.WebApp);
+// Проверка, что мы в Telegram WebView
+function isTelegramWebApp() {
+    // Способ 1: Проверка userAgent
+    const isTelegram = /Telegram|WebApp/i.test(navigator.userAgent);
+    
+    // Способ 2: Проверка объекта Telegram.WebApp
+    const hasWebApp = !!window.Telegram?.WebApp?.initData;
+    
+    return isTelegram || hasWebApp;
+}
 
-// Ждём полной загрузк
+// Инициализация
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('ticketForm');
     
-    // Проверяем WebApp
     if (isTelegramWebApp()) {
+        console.log("Режим Telegram WebApp");
         initTelegramWebApp();
     } else {
-        console.warn("Это не Telegram WebView!");
-        initFallback();
+        console.log("Режим обычного браузера");
+        initFallbackMode();
     }
 
-    form.addEventListener('submit', handleSubmit);
+    form.addEventListener('submit', handleFormSubmit);
 });
 
-function isTelegramWebApp() {
-    return !!window.Telegram?.WebApp?.initData;
-}
-
 function initTelegramWebApp() {
-    console.log("Инициализация WebApp...");
-    Telegram.WebApp.ready();
-    Telegram.WebApp.expand();
-    console.log("WebApp version:", Telegram.WebApp.version);
+    try {
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        console.log("WebApp инициализирован", {
+            version: Telegram.WebApp.version,
+            platform: Telegram.WebApp.platform
+        });
+    } catch (e) {
+        console.error("Ошибка инициализации WebApp:", e);
+    }
 }
 
-function initFallback() {
-    console.log("Режим браузера");
-    // Здесь можно добавить альтернативную логику
+function initFallbackMode() {
+    // Стили или логика для обычного браузера
+    document.body.classList.add('browser-mode');
 }
 
-function handleSubmit(e) {
+function handleFormSubmit(e) {
     e.preventDefault();
     
     const data = {
@@ -43,11 +51,21 @@ function handleSubmit(e) {
     };
 
     if (isTelegramWebApp()) {
-        Telegram.WebApp.sendData(JSON.stringify(data));
-        Telegram.WebApp.close();
+        try {
+            Telegram.WebApp.sendData(JSON.stringify(data));
+            Telegram.WebApp.close();
+        } catch (error) {
+            console.error("Ошибка отправки:", error);
+            showFallbackMessage(data);
+        }
     } else {
-        alert(`Данные (WebApp недоступен):\n${data.title}\n${data.description}`);
+        showFallbackMessage(data);
     }
+}
+
+function showFallbackMessage(data) {
+    alert(`Тикет создан (режим браузера):\nНазвание: ${data.title}\nОписание: ${data.description}`);
+    // Здесь можно добавить отправку через fetch/email/etc
 }
 
 
