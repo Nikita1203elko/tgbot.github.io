@@ -14,7 +14,7 @@ document.getElementById('ticketForm').addEventListener('submit', function(e) {
         // Закрываем веб-приложение после отправки
         Telegram.WebApp.close();
     } else {
-        alert('Данные не отправились почему-то :/, я хз честно как это фиксить',title,description);
+        alert('Данные не отправились почему-то :/, я хз честно как это фиксить'+title+description);
     }
 });
 
