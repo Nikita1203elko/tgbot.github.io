@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+}
+
+h1 {
+    font-weight: 500;
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    color: #4a4a4a;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid #BDE0FE;
+    background-color: transparent;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-bottom-color: #FFAFCC;
+}
+
+.floating-label {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    color: #888;
+    font-weight: 300;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus + .floating-label,
+.input-field:not(:placeholder-shown) + .floating-label {
+    top: -0.5rem;
+    left: 0;
+    font-size: 0.75rem;
+    color: #FFAFCC;
+}
+
+textarea.input-field {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: #FFC8DD;
+    color: #4a4a4a;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #CDB4D8;
+}
